@@ -24,3 +24,20 @@ def simulate_games(game, player1, player2, num_games=100):
     
     results['Average Time'] = total_time / num_games
     return results
+
+
+game = TicTacToe()
+
+# Testing random player vs minimax player
+print("Testing Random Player vs Minimax Player:")
+results_minimax = simulate_games(game, randomplayer.random_player, minimax.minimax_player)
+print(f"Random Wins: {results_minimax['Player1 Wins']}")
+print(f"Minimax Wins: {results_minimax['Player2 Wins']}")
+print(f"Draws: {results_minimax['Draws']}")
+
+# Testing random player vs minimax with pruning
+print("\nTesting Random Player vs Minimax with Pruning Player:")
+results_minimax_pruning = simulate_games(game, randomplayer.random_player, minimax_pruning.minimax_pruning_player)
+print(f"Random Wins: {results_minimax_pruning['Player1 Wins']}")
+print(f"Minimax with Pruning Wins: {results_minimax_pruning['Player2 Wins']}")
+print(f"Draws: {results_minimax_pruning['Draws']}")
