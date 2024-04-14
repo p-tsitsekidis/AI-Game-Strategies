@@ -42,5 +42,5 @@ class Game:
                 move = player(self, state)
                 state = self.result(state, move)
                 if self.terminal_test(state):
-                    self.display(state)
+                    #self.display(state) # Uncomment if you want to display each game
                     return self.utility(state, self.to_move(self.initial))
