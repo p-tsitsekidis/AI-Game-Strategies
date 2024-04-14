@@ -34,6 +34,7 @@ results_minimax = simulate_games(game, randomplayer.random_player, minimax.minim
 print(f"Random Wins: {results_minimax['Player1 Wins']}")
 print(f"Minimax Wins: {results_minimax['Player2 Wins']}")
 print(f"Draws: {results_minimax['Draws']}")
+print(f"Average Decision Time: {results_minimax['Average Time']:.2f} seconds")
 
 # Testing random player vs minimax with pruning
 print("\nTesting Random Player vs Minimax with Pruning Player:")
@@ -41,3 +42,4 @@ results_minimax_pruning = simulate_games(game, randomplayer.random_player, minim
 print(f"Random Wins: {results_minimax_pruning['Player1 Wins']}")
 print(f"Minimax with Pruning Wins: {results_minimax_pruning['Player2 Wins']}")
 print(f"Draws: {results_minimax_pruning['Draws']}")
+print(f"Average Decision Time: {results_minimax_pruning['Average Time']:.2f} seconds")
