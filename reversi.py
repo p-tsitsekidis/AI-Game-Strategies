@@ -162,3 +162,35 @@ class Reversi(Game):
             if board[k] == 'O':
                 oscore += 1
         return {'X':xscore, 'O':oscore}
+    
+    def evaluateEuristicFunction(self, state):
+        total_score = 0
+        return total_score
+    
+    def coinParity(self, state):
+        score = 0
+        x_coins = 0
+        o_coins = 0
+        for k in state.board:
+            if state.board[k] == 'X':
+                x_coins += 1
+            if state.board[k] == 'O':
+                o_coins += 1
+        
+        return 100 * (x_coins - o_coins)/(x_coins + o_coins)
+        
+        
+        
+        return score
+    
+    def mobility(self, state):
+        score = 0
+        return score
+    
+    def cornersCaptured(self, state):
+        score = 0
+        return score
+    
+    def stability(self, state):
+        score = 0
+        return score
