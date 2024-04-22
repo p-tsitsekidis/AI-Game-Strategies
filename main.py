@@ -4,7 +4,7 @@ from manual_player import manual_player
 from minimax import minimax_player
 from minimax_pruning import minimax_pruning_player
 import time
-from riversi import Reversi
+from reversi import Reversi
 
 def simulate_games(game, player1, player2, num_games=100):
     results = {'Player1 Wins': 0, 'Player2 Wins': 0, 'Draws': 0, 'Average Time': 0}
@@ -58,7 +58,7 @@ reversi = Reversi()
 
 # Testing random player vs minimax player
 print("Testing Random Player vs Minimax Player:")
-results_minimax = simulate_games(reversi, random_player, random_player)
+results_minimax = simulate_games(reversi, random_player, minimax_player)
 print(f"Random Player 1 Wins: {results_minimax['Player1 Wins']}")
 print(f"Random Player 2 Wins: {results_minimax['Player2 Wins']}")
 print(f"Draws: {results_minimax['Draws']}")
