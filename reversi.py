@@ -195,8 +195,26 @@ class Reversi(Game):
 
         return score
     
-    def cornersCaptured(self, state):
+    def cornersCaptured(self, board, player):
         score = 0
+        
+        max_player_corners = 0
+        min_player_corners = 0
+        corners = {(1,1), (1,8), (8,1), (8,8)}
+        
+        opponent = 'O' if player == 'X' else 'X'
+        
+        for corner in corners:
+            if corner in board:
+                if board[corner] == player:
+                    max_player_corners += 1
+                elif board[corner] == opponent:
+                    min_player_corners += 1
+
+        if (max_player_corners + min_player_corners != 0):
+            score = 100 * (max_player_corners - min_player_corners) / (max_player_corners + min_player_corners)
+        else:
+            score = 0
         return score
     
     def stability(self, state):
