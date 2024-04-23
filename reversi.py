@@ -177,9 +177,10 @@ class Reversi(Game):
             if state.board[k] == 'O':
                 o_coins += 1
         
-        return 100 * (x_coins - o_coins)/(x_coins + o_coins)
+        score = 100 * (x_coins - o_coins)/(x_coins + o_coins)
+        return score
         
-        
+    
     def mobility(self, board, player):
         
         opponent = 'O' if player == 'X' else 'X'
