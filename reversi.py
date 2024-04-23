@@ -163,7 +163,7 @@ class Reversi(Game):
                 oscore += 1
         return {'X':xscore, 'O':oscore}
     
-    def evaluateEuristicFunction(self, state):
+    def evaluateHeuristicFunction(self, state):
         total_score = 0
         return total_score
     
