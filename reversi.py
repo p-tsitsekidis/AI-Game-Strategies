@@ -180,11 +180,18 @@ class Reversi(Game):
         return 100 * (x_coins - o_coins)/(x_coins + o_coins)
         
         
+    def mobility(self, board, player):
         
-        return score
+        opponent = 'O' if player == 'X' else 'X'
     
-    def mobility(self, state):
-        score = 0
+        max_player_moves = len(self.getValidMoves(board, player))
+        min_player_moves = len(self.getValidMoves(board, opponent))
+        
+        if (max_player_moves + min_player_moves) != 0:
+            score = 100 * (max_player_moves - min_player_moves) / (max_player_moves + min_player_moves)
+        else:
+            score = 0
+
         return score
     
     def cornersCaptured(self, state):
