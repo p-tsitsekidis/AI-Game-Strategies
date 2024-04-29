@@ -192,7 +192,6 @@ class Reversi(Game):
             score = 100 * (max_player_moves - min_player_moves) / (max_player_moves + min_player_moves)
         else:
             score = 0
-
         return score
     
     def cornersCaptured(self, board, player):
@@ -212,11 +211,38 @@ class Reversi(Game):
                     min_player_corners += 1
 
         if (max_player_corners + min_player_corners != 0):
-            score = 100 * (max_player_corners - min_player_corners) / (max_player_corners + min_player_corners)
+            score = 25 * (max_player_corners - min_player_corners)
         else:
             score = 0
         return score
     
     def stability(self, state):
         score = 0
+        max_player_stability_score = 0
+        min_player_stability_score = 0
+        
+        quadrant = [
+            [20, -3, 11, 8],
+            [-3, -7, -4, 1],
+            [11, -4, 2, 2],
+            [8, 1, 2, -3]
+        ]
+        
+        def mirror_horizontally(matrix):
+            return [row[::-1] for row in matrix]
+        
+        def mirror_vertically(matrix):
+            return matrix[::-1]
+        
+        top_half = [quadrant[i] + mirror_horizontally(quadrant)[i] for i in range(len(quadrant))]
+        bottom_half = mirror_vertically(top_half)
+        full_matrix = top_half + bottom_half
+        
+        # for row in full_matrix:
+        #     print(row)
+        
+        if (max_player_stability_score + min_player_stability_score != 0):
+            score = 100 * (max_player_stability_score - min_player_stability_score) / (max_player_stability_score + min_player_stability_score)
+        else:
+            score = 0
         return score
