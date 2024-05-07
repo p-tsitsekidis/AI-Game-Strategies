@@ -23,6 +23,7 @@ class Reversi(Game):
         moves = self.getValidMoves(board, 'X')
         print(moves)
         self.initial = GameState(to_move='X', utility=0, board=board, moves=moves)
+        self.weights_matrix = self.weighted_matrix()
 
     def actions(self, state):
         """Legal moves are any square not yet taken."""
@@ -216,13 +217,7 @@ class Reversi(Game):
             score = 0
         return score
     
-    def stability(self, state, player):
-        score = 0
-        max_player_stability_score = 0
-        min_player_stability_score = 0
-        
-        opponent = 'O' if player == 'X' else 'X'
-        
+    def weighted_matrix(self): 
         quadrant = [
             [20, -3, 11, 8],
             [-3, -7, -4, 1],
@@ -243,14 +238,17 @@ class Reversi(Game):
         # for row in full_matrix:
         #     print(row)
         
-        for x in range(8):
-            for y in range(8):
+        return full_matrix
+    
+    def stability(self, state, player):
+        # Use the matrix initialized during the creation of the instance
+        score = 0
+        for y in range(8):
+            for x in range(8):
                 position = (x, y)
                 if position in state.board:
-                    if state.board[position] == state.to_move:
-                        max_player_stability_score += full_matrix[y][x]
-                    elif state.board[position] == opponent:
-                        min_player_stability_score += full_matrix[y][x]
-    
-        score = max_player_stability_score - min_player_stability_score
+                    if state.board[position] == player:
+                        score += self.stability_matrix[y][x]
+                    else:
+                        score -= self.stability_matrix[y][x]
         return score
