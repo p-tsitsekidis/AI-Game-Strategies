@@ -216,10 +216,12 @@ class Reversi(Game):
             score = 0
         return score
     
-    def stability(self, state):
+    def stability(self, state, player):
         score = 0
         max_player_stability_score = 0
         min_player_stability_score = 0
+        
+        opponent = 'O' if player == 'X' else 'X'
         
         quadrant = [
             [20, -3, 11, 8],
