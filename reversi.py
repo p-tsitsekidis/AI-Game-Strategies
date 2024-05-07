@@ -241,8 +241,14 @@ class Reversi(Game):
         # for row in full_matrix:
         #     print(row)
         
-        if (max_player_stability_score + min_player_stability_score != 0):
-            score = 100 * (max_player_stability_score - min_player_stability_score) / (max_player_stability_score + min_player_stability_score)
-        else:
-            score = 0
+        for x in range(8):
+            for y in range(8):
+                position = (x, y)
+                if position in state.board:
+                    if state.board[position] == state.to_move:
+                        max_player_stability_score += full_matrix[y][x]
+                    elif state.board[position] == opponent:
+                        min_player_stability_score += full_matrix[y][x]
+    
+        score = max_player_stability_score - min_player_stability_score
         return score
