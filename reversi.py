@@ -11,18 +11,25 @@ class Reversi(Game):
     adapted from http://inventwithpython.com/chapter15.html """
 
     def __init__(self):
-        # Creates a brand new, blank board data structure.
+        """
+        Initialize a new game of Reversi with a standard 8x8 board. The board is set up with
+        the starting four pieces in the center. This setup prepares the game for two players,
+        starting with player 'X'.
+        """
+        # Initialize an empty board using a dictionary to store only occupied positions
         board = {}
 
-        # Starting pieces:
-        board[(3,3)] = 'X'
-        board[(3,4)] = 'O'
-        board[(4,3)] = 'O'
-        board[(4,4)] = 'X'
-        print(board)
+        # Place the starting pieces at the center of the board
+        board[(3, 3)], board[(4, 4)] = 'X', 'X'
+        board[(3, 4)], board[(4, 3)] = 'O', 'O'
+
+        # Retrieve initial valid moves for the starting player 'X'
         moves = self.getValidMoves(board, 'X')
-        print(moves)
+
+        # Store the initial game state including board, current player, and valid moves
         self.initial = GameState(to_move='X', utility=0, board=board, moves=moves)
+
+        # Precompute the weights matrix for use in stability evaluations during the game
         self.weights_matrix = self.weighted_matrix()
 
     def actions(self, state):
@@ -30,6 +37,7 @@ class Reversi(Game):
         return state.moves
 
     def result(self, state, move):
+        """Apply a move to the board, flip affected tiles, and return the new game state with the next player's turn."""
         if move not in state.moves:
             return state  # Illegal move has no effect
         board = self.getBoardCopy(state.board)
@@ -55,6 +63,7 @@ class Reversi(Game):
         return self.getValidMoves(state.board, state.to_move) == []
 
     def display(self, state):
+        """Print the game board with the current valid moves highlighted for visualization."""
         board = state.board
         valid_moves = set(state.moves)
         print(valid_moves)
@@ -91,7 +100,7 @@ class Reversi(Game):
             return 0
 
     def getValidMoves(self, board, tile):
-        # Returns a list of [x,y] lists of valid moves for the given player on the given board.
+        """Return a list of all valid move coordinates for the given player on the specified board."""
         validMoves = []
 
         for x in range(8):
@@ -101,6 +110,7 @@ class Reversi(Game):
         return validMoves
 
     def isValidMove(self, board, tile, xstart, ystart):
+        """Determine if a move at position (xstart, ystart) is legal and return the tiles to flip if it is."""
         # Returns False if the player's move on space xstart, ystart is invalid.
         # If it is a valid move, returns a list of spaces that would become the player's if they made a move here.
         if (xstart, ystart) in board or not self.isOnBoard(xstart, ystart):
@@ -146,15 +156,15 @@ class Reversi(Game):
         return tilesToFlip
 
     def isOnBoard(self, x, y):
-        # Returns True if the coordinates are located on the board.
+        """Returns True if the coordinates are located on the board."""
         return x >= 0 and x <= 7 and y >= 0 and y <=7
 
     def getBoardCopy(self, board):
-        # Make a duplicate of the board list and return the duplicate.
+        """Make a duplicate of the board list and return the duplicate."""
         return {k: board[k] for k in board}
 
     def getScoreOfBoard(self, board):
-        # Determine the score by counting the tiles. Returns a dictionary with keys 'X' and 'O'.
+        """Determine the score by counting the tiles. Returns a dictionary with keys 'X' and 'O'."""
         xscore = 0
         oscore = 0
         for k in board:
@@ -165,10 +175,12 @@ class Reversi(Game):
         return {'X':xscore, 'O':oscore}
     
     def evaluateHeuristicFunction(self, state):
+        """Calculate and return the total heuristic score for the given game state."""
         total_score = 0
         return total_score
     
     def coinParity(self, state):
+        """Calculate and return the score based on the relative difference in the number of discs (coins) between the two players."""
         score = 0
         x_coins = 0
         o_coins = 0
@@ -183,7 +195,7 @@ class Reversi(Game):
         
     
     def mobility(self, board, player):
-        
+        """Evaluate and return the mobility score based on the difference in the number of valid moves available to the player and their opponent."""
         opponent = 'O' if player == 'X' else 'X'
     
         max_player_moves = len(self.getValidMoves(board, player))
@@ -196,6 +208,7 @@ class Reversi(Game):
         return score
     
     def cornersCaptured(self, board, player):
+        """Calculate and return the score based on the number of board corners captured by the player versus the opponent."""
         score = 0
         
         max_player_corners = 0
@@ -217,7 +230,8 @@ class Reversi(Game):
             score = 0
         return score
     
-    def weighted_matrix(self): 
+    def weighted_matrix(self):
+        """Creates a matrix that holds the weights of each position. Used by the stability heuristic function """
         quadrant = [
             [20, -3, 11, 8],
             [-3, -7, -4, 1],
@@ -241,7 +255,7 @@ class Reversi(Game):
         return full_matrix
     
     def stability(self, state, player):
-        # Use the matrix initialized during the creation of the instance
+        """Calculate and return the positional stability score using a predefined weighted matrix for board positions."""
         score = 0
         for y in range(8):
             for x in range(8):
