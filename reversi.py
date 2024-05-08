@@ -177,6 +177,13 @@ class Reversi(Game):
     def evaluateHeuristicFunction(self, state):
         """Calculate and return the total heuristic score for the given game state."""
         total_score = 0
+        weight_parity = 10
+        weight_corners_captured = 801.724
+        weight_corners_proximity = 382.026
+        weight_mobility = 78.922
+        weight_stability = 10
+        
+        total_score = weight_parity * self.coinParity(state.board) + weight_corners_captured * self.cornersCaptured(state.board, state.to_move) + weight_corners_proximity * self.cornerProximity(state.board, state.to_move) + weight_mobility * self.mobility(state.board, state.player) + weight_stability * self.stability(state.board, state.to_move)
         return total_score
     
     def coinParity(self, state):
