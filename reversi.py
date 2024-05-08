@@ -186,15 +186,15 @@ class Reversi(Game):
         total_score = weight_parity * self.coinParity(state.board) + weight_corners_captured * self.cornersCaptured(state.board, state.to_move) + weight_corners_proximity * self.cornerProximity(state.board, state.to_move) + weight_mobility * self.mobility(state.board, state.player) + weight_stability * self.stability(state.board, state.to_move)
         return total_score
     
-    def coinParity(self, state):
+    def coinParity(self, board):
         """Calculate and return the score based on the relative difference in the number of discs (coins) between the two players."""
         score = 0
         x_coins = 0
         o_coins = 0
-        for k in state.board:
-            if state.board[k] == 'X':
+        for k in board:
+            if board[k] == 'X':
                 x_coins += 1
-            if state.board[k] == 'O':
+            if board[k] == 'O':
                 o_coins += 1
         
         score = 100 * (x_coins - o_coins)/(x_coins + o_coins)
@@ -261,20 +261,20 @@ class Reversi(Game):
         
         return full_matrix
     
-    def stability(self, state, player):
+    def stability(self, board, player):
         """Calculate and return the positional stability score using a predefined weighted matrix for board positions."""
         score = 0
         for y in range(8):
             for x in range(8):
                 position = (x, y)
-                if position in state.board:
-                    if state.board[position] == player:
+                if position in board:
+                    if board[position] == player:
                         score += self.stability_matrix[y][x]
                     else:
                         score -= self.stability_matrix[y][x]
         return score
     
-    def cornerProximity(self, state):
+    def cornerProximity(self, board, player):
         """Calculate the scoring impact of player tile proximity to unoccupied board corners."""
         score = 0
         
@@ -285,12 +285,10 @@ class Reversi(Game):
         (8, 8): [(7, 7), (7, 8), (8, 7)]
         }
         
-        player = 'X' if state.to_move == 'X' else 'O'
-        
         for corner in corners:
-            if corner not in state.board:
+            if corner not in board:
                 for x, y in corners[corner]:
-                    if (x, y) in state.board and state.board[(x, y)] == player:
+                    if (x, y) in board and board[(x, y)] == player:
                         score -= 1
                         
         score = -12.5 * score
