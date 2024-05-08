@@ -280,6 +280,8 @@ class Reversi(Game):
     def cornerProximity(self, board, player):
         """Calculate the scoring impact of player tile proximity to unoccupied board corners."""
         score = 0
+        xscore = 0
+        oscore = 0
         
         corners = {
         (1, 1): [(1, 2), (2, 1), (2, 2)],
@@ -288,11 +290,15 @@ class Reversi(Game):
         (8, 8): [(7, 7), (7, 8), (8, 7)]
         }
         
+        opponent = 'O' if player == 'X' else 'X'
+        
         for corner in corners:
             if corner not in board:
                 for x, y in corners[corner]:
                     if (x, y) in board and board[(x, y)] == player:
-                        score -= 1
+                        xscore += 1
+                    elif (x, y) in board and board[(x, y)] == opponent:
+                        oscore += 1
                         
-        score = -12.5 * score
+        score = -12.5 * (xscore - oscore)
         return score
