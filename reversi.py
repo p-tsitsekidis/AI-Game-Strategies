@@ -212,7 +212,10 @@ class Reversi(Game):
         min_player_moves = len(self.getValidMoves(board, opponent))
         
         if (max_player_moves + min_player_moves) != 0:
-            score = 100 * (max_player_moves - min_player_moves) / (max_player_moves + min_player_moves)
+            if max_player_moves > min_player_moves:
+                score = 100 * max_player_moves / (max_player_moves + min_player_moves)
+            elif min_player_moves > max_player_moves:
+                score = 100 * min_player_moves / (max_player_moves + min_player_moves)
         else:
             score = 0
         return score
