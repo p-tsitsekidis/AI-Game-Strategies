@@ -266,3 +266,25 @@ class Reversi(Game):
                     else:
                         score -= self.stability_matrix[y][x]
         return score
+    
+    def cornerProximity(self, state):
+        """Calculate the scoring impact of player tile proximity to unoccupied board corners."""
+        score = 0
+        
+        corners = {
+        (1, 1): [(1, 2), (2, 1), (2, 2)],
+        (1, 8): [(1, 7), (2, 7), (2, 8)],
+        (8, 1): [(7, 1), (7, 2), (8, 2)],
+        (8, 8): [(7, 7), (7, 8), (8, 7)]
+        }
+        
+        player = 'X' if state.to_move == 'X' else 'O'
+        
+        for corner in corners:
+            if corner not in state.board:
+                for x, y in corners[corner]:
+                    if (x, y) in state.board and state.board[(x, y)] == player:
+                        score -= 1
+                        
+        score = -12.5 * score
+        return score
