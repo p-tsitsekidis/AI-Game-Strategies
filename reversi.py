@@ -237,10 +237,7 @@ class Reversi(Game):
                 elif board[corner] == opponent:
                     min_player_corners += 1
 
-        if (max_player_corners + min_player_corners != 0):
-            score = 25 * (max_player_corners - min_player_corners)
-        else:
-            score = 0
+        score = 25 * (max_player_corners - min_player_corners)
         return score
     
     def weighted_matrix(self):
