@@ -197,7 +197,10 @@ class Reversi(Game):
             if board[k] == 'O':
                 o_coins += 1
         
-        score = 100 * (x_coins - o_coins)/(x_coins + o_coins)
+        if x_coins > o_coins:
+            score = 100 * x_coins/(x_coins + o_coins)
+        elif o_coins > x_coins:
+            score = 100 * o_coins/(x_coins + o_coins)
         return score
         
     
