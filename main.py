@@ -5,8 +5,9 @@ from minimax import minimax_player
 from minimax_pruning import minimax_pruning_player
 import time
 from reversi import Reversi
+from minimax_limited_pruning import minimax_limited_pruning_player
 
-def simulate_games(game, player1, player2, num_games=100):
+def simulate_games(game, player1, player2, num_games=50): # Set the number of simulated games here!!
     results = {'Player1 Wins': 0, 'Player2 Wins': 0, 'Draws': 0, 'Average Time': 0}
     total_time = 0
     
@@ -56,10 +57,18 @@ reversi = Reversi()
 # else:
 #     print('Tie!')
 
-# Testing random player vs minimax player
-print("Testing Random Player vs Minimax Player:")
-results_minimax = simulate_games(reversi, random_player, minimax_player)
-print(f"Random Player 1 Wins: {results_minimax['Player1 Wins']}")
-print(f"Random Player 2 Wins: {results_minimax['Player2 Wins']}")
-print(f"Draws: {results_minimax['Draws']}")
-print(f"Average Decision Time: {results_minimax['Average Time']:.2f} seconds")
+# # Testing random player vs minimax player
+# print("Testing Random Player vs Minimax Player:")
+# results_minimax = simulate_games(reversi, random_player, minimax_player)
+# print(f"Random Player 1 Wins: {results_minimax['Player1 Wins']}")
+# print(f"Random Player 2 Wins: {results_minimax['Player2 Wins']}")
+# print(f"Draws: {results_minimax['Draws']}")
+# print(f"Average Decision Time: {results_minimax['Average Time']:.2f} seconds")
+
+# Testing random player vs minimax with pruning
+print("\nTesting Random Player vs Minimax with Pruning Player:")
+results_minimax_pruning = simulate_games(reversi, random_player, minimax_limited_pruning_player)
+print(f"Random Wins: {results_minimax_pruning['Player1 Wins']}")
+print(f"Minimax with Pruning Wins: {results_minimax_pruning['Player2 Wins']}")
+print(f"Draws: {results_minimax_pruning['Draws']}")
+print(f"Average Decision Time: {results_minimax_pruning['Average Time']:.2f} seconds")
