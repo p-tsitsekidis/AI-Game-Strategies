@@ -217,8 +217,6 @@ class Reversi(Game):
                 score = 100 * max_player_moves / (max_player_moves + min_player_moves)
             elif min_player_moves > max_player_moves:
                 score = 100 * min_player_moves / (max_player_moves + min_player_moves)
-        else:
-            score = 0
         return score
     
     def cornersCaptured(self, board, player):
