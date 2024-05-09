@@ -183,7 +183,7 @@ class Reversi(Game):
         weight_mobility = 78.922
         weight_stability = 10
         
-        total_score = weight_parity * self.coinParity(state.board) + weight_corners_captured * self.cornersCaptured(state.board, state.to_move) + weight_corners_proximity * self.cornerProximity(state.board, state.to_move) + weight_mobility * self.mobility(state.board, state.player) + weight_stability * self.stability(state.board, state.to_move)
+        total_score = weight_parity * self.coinParity(state.board) + weight_corners_captured * self.cornersCaptured(state.board, state.to_move) + weight_corners_proximity * self.cornerProximity(state.board, state.to_move) + weight_mobility * self.mobility(state.board, state.to_move) + weight_stability * self.stability(state.board, state.to_move)
         return total_score
     
     def coinParity(self, board):
