@@ -271,9 +271,9 @@ class Reversi(Game):
                 position = (x, y)
                 if position in board:
                     if board[position] == player:
-                        score += self.stability_matrix[y][x]
+                        score += self.weights_matrix[y][x]
                     else:
-                        score -= self.stability_matrix[y][x]
+                        score -= self.weights_matrix[y][x]
         return score
     
     def cornerProximity(self, board, player):
