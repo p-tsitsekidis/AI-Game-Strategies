@@ -206,6 +206,7 @@ class Reversi(Game):
     
     def mobility(self, board, player):
         """Evaluate and return the mobility score based on the difference in the number of valid moves available to the player and their opponent."""
+        score = 0
         opponent = 'O' if player == 'X' else 'X'
     
         max_player_moves = len(self.getValidMoves(board, player))
