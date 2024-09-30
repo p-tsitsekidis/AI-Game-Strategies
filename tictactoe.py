@@ -14,7 +14,7 @@ class TicTacToe(Game):
         self.v = v
         self.k = k
         moves = [(x, y) for x in range(1, h + 1)
-                 for y in range(1, v + 1)]
+                for y in range(1, v + 1)]
         self.initial = GameState(to_move='X', utility=0, board={}, moves=moves)
 
     def actions(self, state):
@@ -29,8 +29,8 @@ class TicTacToe(Game):
         moves = list(state.moves)
         moves.remove(move)
         return GameState(to_move=('O' if state.to_move == 'X' else 'X'),
-                         utility=self.compute_utility(board, move, state.to_move),
-                         board=board, moves=moves)
+                        utility=self.compute_utility(board, move, state.to_move),
+                        board=board, moves=moves)
 
     def utility(self, state, player):
         """Return the value to player; 1 for win, -1 for loss, 0 otherwise."""

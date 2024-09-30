@@ -51,8 +51,8 @@ class Reversi(Game):
         else:
             moves = self.getValidMoves(board, 'X')
         return GameState(to_move=('O' if state.to_move == 'X' else 'X'),
-                         utility=self.compute_utility(board, move, state.to_move),
-                         board=board, moves=moves)
+                        utility=self.compute_utility(board, move, state.to_move),
+                        board=board, moves=moves)
 
     def utility(self, state, player):
         """Return the value to player; 1 for win, -1 for loss, 0 otherwise."""
