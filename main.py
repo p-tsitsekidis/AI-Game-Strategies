@@ -1,4 +1,5 @@
 from tictactoe import TicTacToe
+from reversi import Reversi
 from randomplayer import random_player
 from manual_player import manual_player
 from minimax import minimax_player
@@ -6,6 +7,8 @@ from minimax_pruning import minimax_pruning_player
 import time
 from reversi import Reversi
 from minimax_limited_pruning import minimax_limited_pruning_player
+from mcts import mcts_player
+import time
 
 def simulate_games(game, player1, player2, num_games=50): # Set the number of simulated games here!!
     results = {'Player1 Wins': 0, 'Player2 Wins': 0, 'Draws': 0, 'Average Time': 0}
