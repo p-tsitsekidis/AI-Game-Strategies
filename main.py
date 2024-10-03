@@ -19,7 +19,7 @@ def simulate_games(game, player1, player2, num_games):
     total_player1_move_time = 0
     total_player2_move_time = 0
     
-    for _ in range(num_games):
+    for _ in range(num_games): # Play the game, user defined times
         utility, avg_player1_time, avg_player2_time = game.play_game(player1, player2)
         
         total_player1_move_time += avg_player1_time
@@ -38,7 +38,9 @@ def simulate_games(game, player1, player2, num_games):
 
 def game_initialization(game, player_1, player_2, num_of_games):
     print("\n\nThe game is starting:")
-    results = simulate_games(game, player_1, player_2, num_of_games)
+    results = simulate_games(game, player_1, player_2, num_of_games) # Play the game
+    
+    # Statistics
     print(f"Player 1 Wins: {results['Player1_Wins']}")
     print(f"Player 2 Wins: {results['Player2_Wins']}")
     print(f"Draws: {results['Draws']}")
@@ -59,6 +61,7 @@ games = {
     "2": Reversi()
 }
 
+# Game choice
 print("Choose which game you would like to play:")
 print("1. Tic Tac Toe")
 print("2. Reversi (Othello)")
@@ -72,6 +75,7 @@ while True:
 
 game = games.get(game_choice)
 
+# Player 1 and Player 2 choice
 for i in range(2):
     print(f"\n\nChoose Player {i+1}:")
     print("1. Human Player (You)")
@@ -96,6 +100,7 @@ for i in range(2):
     else:
         player_2 = all_players.get(player_choice)
 
+# Number of games choice
 print("Enter the number of games you wish to play (Statistics are shown at the end)")
 while True:
     try:
@@ -107,4 +112,5 @@ while True:
     except ValueError:
         print("Invalid input. Please enter a positive integer that reflects the number of games you wish to play.")
 
+# Initialize the game
 game_initialization(game, player_1, player_2, num_of_games)
