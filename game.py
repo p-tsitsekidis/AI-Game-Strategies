@@ -35,12 +35,27 @@ class Game:
         return '<{}>'.format(self.__class__.__name__)
 
     def play_game(self, *players):
+        import time
         """Play an n-person, move-alternating game."""
         state = self.initial
+        player_move_times = [[], []]
         while True:
-            for player in players:
+            for i, player in enumerate(players):
+                # Start timing for the player's move
+                start_time = time.time()
                 move = player(self, state)
                 state = self.result(state, move)
+                end_time = time.time()
+
+                # Store the time taken for this move
+                move_time = end_time - start_time
+                player_move_times[i].append(move_time)
+
                 if self.terminal_test(state):
                     #self.display(state) # Uncomment if you want to display each game
-                    return self.utility(state, self.to_move(self.initial))
+                    
+                    # Calculate average time per move for each player
+                    avg_player1_time = sum(player_move_times[0]) / len(player_move_times[0]) if player_move_times[0] else 0
+                    avg_player2_time = sum(player_move_times[1]) / len(player_move_times[1]) if player_move_times[1] else 0
+
+                    return self.utility(state, self.to_move(self.initial)), avg_player1_time, avg_player2_time
