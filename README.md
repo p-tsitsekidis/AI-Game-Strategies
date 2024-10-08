@@ -1,4 +1,4 @@
-# AI-StrategyGamesLab
+# AI-Game-Strategies
 
 ## Overview
 
